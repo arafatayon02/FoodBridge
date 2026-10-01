@@ -8,11 +8,19 @@
         <version>4.1.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+<<<<<<< HEAD
     <groupId>com.example</groupId>
     <artifactId>demo1</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>demo1</name>
     <description>demo1</description>
+=======
+    <groupId>com.project</groupId>
+    <artifactId>FoodBridge</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>FoodBridge</name>
+    <description>FoodBridge</description>
+>>>>>>> origin/master
     <url/>
     <licenses>
         <license/>
