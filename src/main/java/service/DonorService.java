@@ -34,8 +34,7 @@ public class DonorService {
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
 
-    // FOOD-59: register a restaurant/bakery with status = PENDING,
-    // plus its first (owner) staff login.
+
     @Transactional
     public RestaurantDonor registerDonor(RegisterDonorRequest request) {
         if (userRepository.existsByEmail(request.getOwnerEmail())) {
