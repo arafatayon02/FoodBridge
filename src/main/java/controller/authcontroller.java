@@ -1,13 +1,10 @@
-package com.foodbridge.backend.controller;
+package com.foodbridge.controller;
 
-import com.foodbridge.backend.dto.ForgotPasswordRequest;
-import com.foodbridge.backend.dto.LoginRequest;
-import com.foodbridge.backend.dto.LoginResponse;
-import com.foodbridge.backend.dto.ResetPasswordRequest;
-import com.foodbridge.backend.service.AuthService;
+import com.foodbridge.dto.auth.*;
+import com.foodbridge.entity.User;
+import com.foodbridge.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -16,27 +13,23 @@ import java.util.Map;
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthController {
+    private final AuthService auth;
 
-    private final AuthService authService;
+    @PostMapping("/register/consumer")
+    public User consumer(@Valid @RequestBody ConsumerRegisterRequest r) { return auth.registerConsumer(r); }
 
-    // Feature 6: single login endpoint for every role (supershop staff, donor
-    // staff, charity, consumer, admin) - the JWT's "role" claim drives access.
+    @PostMapping("/register/supershop")
+    public User supershop(@Valid @RequestBody PartnerRegisterRequest r) { return auth.registerSupershop(r); }
+
+    @PostMapping("/register/donor")
+    public User donor(@Valid @RequestBody PartnerRegisterRequest r) { return auth.registerDonor(r); }
+
+    @PostMapping("/register/charity")
+    public User charity(@Valid @RequestBody CharityRegisterRequest r) { return auth.registerCharity(r); }
+
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
-        return ResponseEntity.ok(authService.login(request));
-    }
+    public LoginResponse login(@Valid @RequestBody LoginRequest r) { return auth.login(r); }
 
-    // Feature 2 (step 1): request an OTP be emailed to the account
-    @PostMapping("/forgot-password")
-    public ResponseEntity<Map<String, String>> forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
-        authService.forgotPassword(request);
-        return ResponseEntity.ok(Map.of("message", "If that email exists, an OTP has been sent."));
-    }
-
-    // Feature 2 (step 2): submit the OTP + new password
-    @PostMapping("/reset-password")
-    public ResponseEntity<Map<String, String>> resetPassword(@Valid @RequestBody ResetPasswordRequest request) {
-        authService.resetPassword(request);
-        return ResponseEntity.ok(Map.of("message", "Password reset successful."));
-    }
+    @GetMapping("/health")
+    public Map<String,String> health() { return Map.of("status", "FoodBridge backend is running"); }
 }

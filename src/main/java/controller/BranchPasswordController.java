@@ -29,9 +29,12 @@ public class BranchPasswordController {
     @PostMapping("/reset") public Map<String,String> reset(@RequestBody Reset r){
         if(r.newPassword()==null || r.newPassword().length()<8) throw new org.springframework.web.server.ResponseStatusException(HttpStatus.BAD_REQUEST,"Password too short");
         String email=r.email()==null?"":r.email().trim().toLowerCase(Locale.ROOT);
+
         var token=resets.findFirstByEmailAndUsedFalseOrderByIdDesc(email).orElseThrow(()->new org.springframework.web.server.ResponseStatusException(HttpStatus.BAD_REQUEST,"Invalid code"));
+
         if(token.expiresAt.isBefore(Instant.now()) || !passwords.matches(r.code(),token.tokenHash))
             throw new org.springframework.web.server.ResponseStatusException(HttpStatus.BAD_REQUEST,"Invalid or expired code");
+
         var u=users.findByEmail(email).orElseThrow(); u.setPassword(passwords.encode(r.newPassword()));users.save(u);
         token.used=true; resets.save(token);return Map.of("message","Password updated");
     }
