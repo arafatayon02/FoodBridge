@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Donor &amp; Charity</title>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+<header>
+    <h1>FoodBridge · Donor &amp; Charity</h1>
+    <small>REST API: localhost:8080 · JWT stored in this browser tab</small>
+</header>
+
+<main>
+    <div class="grid">
+        <section>
+            <h2>FOOD-62/63 · Create donation listing</h2>
+
+            <label>Donor ID</label>
+            <input id="donorId" type="number">
+
+            <label>Title</label>
+            <input id="title">
+
+            <label>Description</label>
+            <textarea id="description"></textarea>
+
+            <label>Portions</label>
+            <input id="portions" type="number" min="1">
+
+            <label>Pickup address</label>
+            <input id="address">
+
+            <label>Pickup deadline</label>
+            <input id="pickup" type="datetime-local">
+
+            <button id="create">Publish listing</button>
+
+            <pre class="msg" id="listingOut"></pre>
+        </section>
+
+        <section>
+            <h2>FOOD-66/67 · Charity registration</h2>
+
+            <label>Charity name</label>
+            <input id="charity">
+
+            <label>Email</label>
+            <input id="email">
+
+            <label>Address</label>
+            <input id="charityAddress">
+
+            <label>Registration number</label>
+            <input id="regNo">
+
+            <button id="apply">Apply for verification</button>
+
+            <pre class="msg" id="charityOut"></pre>
+        </section>
+    </div>
+
+    <section>
+        <h2>Available donations</h2>
+
+        <button id="refresh">Refresh listings</button>
+
+        <div id="list"></div>
+    </section>
+
+    <section>
+        <h2>Staff access</h2>
+
+        <label>Staff email</label>
+        <input id="loginEmail">
+
+        <label>Password</label>
+        <input id="loginPass" type="password">
+
+        <button id="login">Login</button>
+
+        <pre class="msg" id="loginOut"></pre>
+    </section>
+</main>
+
+<script src="common.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
