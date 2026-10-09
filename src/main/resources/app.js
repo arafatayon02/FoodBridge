@@ -1,0 +1,5 @@
+document.getElementById('register').onclick=()=>execute('authOut',()=>call('/api/auth/register/consumer','POST',{fullName:value('name'),email:value('registerEmail'),phone:value('phone'),password:value('registerPass')}));
+document.getElementById('login').onclick=()=>execute('authOut',async()=>{const r=await call('/api/auth/login','POST',{email:value('email'),password:value('pass')});sessionStorage.setItem('foodbridge_token',r.token||r.accessToken||'');return {message:'Logged in',role:r.role}});
+document.getElementById('forgot').onclick=()=>execute('resetOut',()=>call('/api/auth/consumer-password/forgot','POST',{email:value('forgotEmail')}));
+document.getElementById('reset').onclick=()=>execute('resetOut',()=>call('/api/auth/consumer-password/reset','POST',{email:value('forgotEmail'),code:value('code'),newPassword:value('newPassword')}));
+document.getElementById('feed').onclick=()=>execute('feedOut',async()=>{const r=await call('/api/consumer/discounts');renderList('list',r,['shopName','productName','discountPercent','expiresAt']);return {count:r.length}});
