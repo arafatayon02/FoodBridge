@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Supershop Portal</title><link rel="stylesheet" href="staffstyles.css">
+</head>
+<body>
+<header>
+    <h1>FoodBridge · Supershop Portal</h1>
+    <small>REST API: localhost:8080 · JWT stored in this browser tab</small>
+</header><main><div class="grid"><section>
+    <h2>FOOD-11 · Register supershop</h2>
+    <label>Business name</label>
+    <input id="business"><label>Address</label>
+    <input id="address"><label>Contact person</label>
+    <input id="contact"><label>Phone</label>
+    <input id="phone"><label>Owner name</label>
+    <input id="owner"><label>Owner email</label>
+    <input id="email" type="email"><label>Password</label>
+    <input id="password" type="password">
+    <button id="register">Submit</button>
+    <pre class="msg" id="rout"></pre>
+</section><section><h2>FOOD-20 · Staff login</h2>
+    <label>Email</label><input id="loginEmail">
+    <label>Password</label>
+    <input id="loginPass" type="password">
+    <button id="login">Sign in</button>
+    <pre class="msg" id="lout"></pre>
+    <h2>FOOD-22 · Password recovery</h2>
+    <label>Email</label>
+    <input id="resetEmail">
+    <button id="forgot">Send reset code</button>
+    <label>6 digit code</label>
+    <input id="otp">
+    <label>New password</label>
+    <input id="newPass" type="password">
+    <button id="reset">Reset password</button>
+    <pre class="msg" id="pout"></pre>
+</section></div><section>
+    <h2>FOOD-13/23 · Branch staff management</h2>
+    <label>Branch ID</label>
+    <input id="branch" type="number">
+    <button id="access">Check branch access</button>
+    <button id="staffList">List staff</button>
+    <label>New staff name</label>
+    <input id="staffName">
+    <label>Email</label>
+    <input id="staffEmail">
+    <label>Password</label>
+    <input id="staffPass" type="password">
+    <button id="addStaff">Add staff</button>
+    <pre class="msg" id="sout"></pre>
+</section></main><script src="common.js">
+
+</script><script src="app.js">
+
+</script>
+</body>
+</html>
+
