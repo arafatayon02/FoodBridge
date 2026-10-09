@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head><body><header><h1>FoodBridge · Admin Dashboard</h1><small>REST API: localhost:8080 · JWT stored in this browser tab</small></header>
+<main>
+    <section><h2>Admin login</h2>
+        <label>Email</label>
+        <input id="email">
+        <label>Password</label>
+        <input id="password" type="password">
+        <button id="login">Login</button>
+        <pre class="msg" id="loginOut"></pre>
+    </section>
+    <section><h2>FOOD-77/80 · Verification queue</h2>
+        <button id="summary">Dashboard summary</button>
+        <button id="shops">Pending supershops</button>
+        <button id="donors">Pending donors</button>
+        <pre class="msg" id="queue"></pre>
+        <div id="records"></div>
+    </section>
+    <section><h2>FOOD-81 · Approve / reject</h2>
+        <label>Account type</label>
+        <select id="kind">
+            <option value="supershops">Supershop</option>
+            <option value="donors">Donor</option>
+        </select>
+        <label>Record ID</label>
+        <input id="recordId" type="number">
+        <label>Reason (required if rejecting)</label>
+        <textarea id="reason"></textarea>
+        <button id="approve">Approve</button>
+        <button id="reject" class="secondary">Reject</button>
+        <pre class="msg" id="decision"></pre>
+    </section></main><script src="common.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

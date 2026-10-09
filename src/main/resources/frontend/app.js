@@ -1,0 +1,4 @@
+document.getElementById('login').onclick=()=>execute('loginOut',async()=>{const r=await call('/api/admin/auth/login','POST',{email:value('email'),password:value('password')});sessionStorage.setItem('foodbridge_token',r.token||r.accessToken||'');return {message:'Admin signed in',role:r.role}});
+document.getElementById('summary').onclick=()=>execute('queue',()=>call('/api/admin/dashboard/summary'));
+for(const type of ['shops','donors'])document.getElementById(type).onclick=()=>execute('queue',async()=>{let data=await call('/api/admin/'+(type==='shops'?'supershops':'donors')+'/pending');renderList('records',data,['id','businessName','status']);return {count:data.length}});
+for(const [button,approve] of [['approve',true],['reject',false]])document.getElementById(button).onclick=()=>execute('decision',()=>call('/api/admin/'+value('kind')+'/'+encodeURIComponent(value('recordId'))+'/verify','PUT',{approve,rejectionReason:value('reason')}));
