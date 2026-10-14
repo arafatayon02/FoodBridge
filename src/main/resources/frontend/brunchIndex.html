@@ -1,0 +1,134 @@
+import os, zipfile, textwrap, shutil
+root='/mnt/data/FoodBridge-Supershop'
+html = r'''<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#102a24">
+    <meta name="description" content="FoodBridge Supershop Portal for managing discounted near-expiry inventory.">
+    <title>FoodBridge | Supershop Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/branchStyle.css">
+</head>
+<body>
+<aside class="sidebar">
+    <a class="brand" href="/" aria-label="FoodBridge home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M16 27V14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M16 17C7 17 5 11 6 5c7 0 12 3 10 12Z" fill="currentColor" opacity=".95"/><path d="M16 21c9 0 12-5 11-11-7 0-12 3-11 11Z" fill="currentColor" opacity=".65"/></svg>
+      </span>
+        <span class="brand-name">foodbridge<span>.</span><small>RETAIL OPERATIONS</small></span>
+    </a>
+    <div class="side-label">WORKSPACE</div>
+    <nav class="side-nav" aria-label="Main navigation">
+        <a class="nav-item active" href="#overview"><span class="nav-icon">◫</span> Overview</a>
+        <a class="nav-item" href="#register"><span class="nav-icon">＋</span> Branch registration</a>
+        <a class="nav-item" href="#create-listing"><span class="nav-icon">▤</span> Discount listings</a>
+        <a class="nav-item" href="#bulk-upload"><span class="nav-icon">⇧</span> Bulk upload</a>
+        <a class="nav-item" href="#admin-review"><span class="nav-icon">✓</span> Branch review</a>
+    </nav>
+    <div class="sidebar-bottom">
+        <div class="help-card"><span class="help-symbol">?</span><strong>Need a hand?</strong><p>Keep product details accurate and check expiry dates before publishing.</p></div>
+        <div class="side-foot"><span class="online-dot"></span> FoodBridge services <b>Connected</b></div>
+        <small class="version">RETAIL TRACK · INTERNAL PORTAL</small>
+    </div>
+</aside>
+
+<main class="main-shell">
+    <header class="topbar">
+        <div class="breadcrumbs"><span>Workspace</span><span class="crumb-slash">/</span><strong>Overview</strong></div>
+        <div class="topbar-right"><span class="live-pill"><i></i> System operational</span><span class="avatar" aria-label="Operations administrator">FB</span></div>
+    </header>
+
+    <div class="page-content">
+        <section class="welcome" id="overview">
+            <div>
+                <p class="eyebrow">THURSDAY · RETAIL OPERATIONS</p>
+                <h1>Good work starts with <span>less waste.</span></h1>
+                <p class="welcome-copy">Manage your branches and move near-expiry products to the people who need them.</p>
+            </div>
+            <div class="welcome-art" aria-hidden="true">
+                <div class="art-circle circle-one"></div><div class="art-circle circle-two"></div>
+                <div class="art-leaf leaf-one">⌁</div><div class="art-leaf leaf-two">⌁</div>
+                <div class="art-caption"><span>FOOD</span><strong>FORWARD.</strong></div>
+            </div>
+        </section>
+
+        <section class="stats-grid" aria-label="Portal summary">
+            <article class="stat-card"><div class="stat-top"><span class="stat-label">Active listings</span><span class="stat-icon green">▤</span></div><div class="stat-value" id="listingCount">—</div><div class="stat-foot"><span class="tiny-dot"></span> Currently available in catalogue</div></article>
+            <article class="stat-card"><div class="stat-top"><span class="stat-label">Listing workflow</span><span class="stat-icon amber">↗</span></div><div class="stat-value">Real-time</div><div class="stat-foot">Prices calculated automatically</div></article>
+            <article class="stat-card"><div class="stat-top"><span class="stat-label">Branch verification</span><span class="stat-icon violet">✓</span></div><div class="stat-value">Admin-led</div><div class="stat-foot">New branches require approval</div></article>
+        </section>
+
+        <div class="section-heading">
+            <div><p class="eyebrow">GET THINGS DONE</p><h2>Operations workspace</h2><p class="section-sub">Use the tools below to manage your branch and discounted inventory.</p></div>
+            <span class="secure-label"><span>♧</span> Secure workflow</span>
+        </div>
+
+        <div class="workspace-grid">
+            <section class="panel" id="register">
+                <div class="panel-head"><span class="panel-icon green">01</span><div><h3>Register a supershop</h3><p>Submit a new branch for verification.</p></div></div>
+                <form id="registerForm">
+                    <label>Business name<input name="businessName" required maxlength="150" placeholder="e.g. Green Basket Superstore"></label>
+                    <label>Branch address<input name="address" required maxlength="500" placeholder="Street, area, city"></label>
+                    <div class="two"><label>Contact person<input name="contactPerson" required placeholder="Full name"></label><label>Phone number<input name="contactPhone" required pattern="[+0-9()\- ]{7,25}" placeholder="+880 1XXXXXXXXX"></label></div>
+                    <div class="two"><label>Owner name<input name="ownerName" required placeholder="Account owner"></label><label>Owner email<input name="ownerEmail" type="email" required placeholder="name@business.com"></label></div>
+                    <label>Account password<input name="ownerPassword" type="password" minlength="10" maxlength="72" required placeholder="Create a strong password"><small>Use at least 10 characters.</small></label>
+                    <button class="primary-btn" type="submit">Submit for verification <span>↗</span></button>
+                </form>
+                <pre id="registerOut" class="output" aria-live="polite"></pre>
+            </section>
+
+            <section class="panel" id="create-listing">
+                <div class="panel-head"><span class="panel-icon blue">02</span><div><h3>Create a discount listing</h3><p>Publish products from an approved branch.</p></div></div>
+                <form id="listingForm">
+                    <label>Supershop / branch ID<input name="supershopId" type="number" min="1" required placeholder="Enter approved branch ID"></label>
+                    <label>Product name<input name="productName" required maxlength="180" placeholder="e.g. Fresh milk 1 litre"></label>
+                    <label>SKU / item code<input name="sku" required maxlength="80" placeholder="e.g. MILK-001"></label>
+                    <div class="two"><label>Original price (৳)<input name="originalPrice" type="number" min=".01" step=".01" required placeholder="120.00"></label><label>Discount (%)<input name="discountPercent" type="number" min="0" max="90" step=".01" value="20" required></label></div>
+                    <div class="two"><label>Available quantity<input name="quantity" type="number" min="1" max="100000" required placeholder="e.g. 12"></label><label>Expiry date<input name="expiryDate" type="date" required></label></div>
+                    <div class="price-preview"><div><span class="preview-label">CUSTOMER PRICE</span><strong id="price">৳0.00</strong></div><div class="saving-chip"><span id="saving">You save ৳0.00</span></div></div>
+                    <button class="primary-btn" type="submit">Publish listing <span>↗</span></button>
+                </form>
+                <pre id="listingOut" class="output" aria-live="polite"></pre>
+            </section>
+
+            <section class="panel" id="bulk-upload">
+                <div class="panel-head"><span class="panel-icon violet">03</span><div><h3>Bulk listing upload</h3><p>Add multiple products in one step.</p></div></div>
+                <form id="bulkForm">
+                    <label>Approved branch ID<input name="supershopId" type="number" min="1" required placeholder="Enter approved branch ID"></label>
+                    <label>CSV inventory file<input name="file" type="file" accept=".csv,text/csv" required></label>
+                    <div class="upload-note"><span class="upload-symbol">⇧</span><div><strong>CSV format required</strong><p>Upload up to 500 product rows. Dates must use YYYY-MM-DD.</p></div></div>
+                    <p class="hint">Required columns: productName, sku, originalPrice, discountPercent, quantity, expiryDate</p>
+                    <button class="primary-btn" type="submit">Upload inventory <span>↗</span></button>
+                    <a class="download" href="/sample-listings.csv" download>Download sample CSV <span>↓</span></a>
+                </form>
+                <pre id="bulkOut" class="output" aria-live="polite"></pre>
+            </section>
+
+            <section class="panel" id="admin-review">
+                <div class="panel-head"><span class="panel-icon amber">04</span><div><h3>Branch verification</h3><p>Review pending registration requests.</p></div></div>
+                <div class="admin-note"><span class="lock-symbol">⌑</span><p>Administrator access is required to approve or reject a branch.</p></div>
+                <form id="adminForm">
+                    <label>Admin username<input name="username" autocomplete="username" required value="admin"></label>
+                    <label>Admin password<input name="password" type="password" autocomplete="current-password" required placeholder="Enter admin password"></label>
+                    <button class="primary-btn" type="submit">Load pending branches <span>↗</span></button>
+                </form>
+                <div id="adminOut" class="results"></div>
+                <pre id="adminMsg" class="output" aria-live="polite"></pre>
+            </section>
+        </div>
+
+        <section class="panel catalogue-panel" id="catalogue">
+            <div class="catalogue-head"><div><p class="eyebrow">PUBLIC CATALOGUE</p><h2>Discount listings</h2><p class="section-sub">Products currently available for customers.</p></div><button id="refresh" class="secondary-btn" type="button"><span>↻</span> Refresh catalogue</button></div>
+            <div id="listings" class="listing-grid"></div>
+            <pre id="listOut" class="output" aria-live="polite"></pre>
+        </section>
+        <footer><span>© FoodBridge · Retail Track</span><span>Reducing food waste, one listing at a time.</span></footer>
+    </div>
+</main>
+<script src="/app.js"></script>
+</body>
+</html>
