@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
+:root {--orange:#ef7628;--orange-dark:#cf5b16;--ink:#202b38;--muted:#748091;--line:#e6eaf0;--bg:#f6f7f9;--green:#197b4b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px 'DM Sans',sans-serif}
+.topbar{height:auto;min-height:88px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:16px 30px;gap:24px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;background:var(--orange);color:white;font:800 15px Manrope}
+.brand h1{font:800 19px Manrope;margin:0}
+.brand h1 span{color:var(--orange)}
+.brand p{margin:3px 0 0;color:var(--muted);font-size:12px}
+.login{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.login input{width:150px}
+.login input,.inline-form input,.form-grid input,.form-grid select{border:1px solid #d9dee6;border-radius:8px;padding:10px 11px;font:inherit;min-width:0;background:#fff}
+.login button{padding:10px 14px}
+.status{font-size:12px;color:var(--muted)}
+.shell{display:grid;grid-template-columns:235px minmax(0,1fr);min-height:calc(100vh - 88px)}
+.sidebar{padding:26px 14px;background:#fff;border-right:1px solid var(--line)}
+.nav-label,.eyebrow{font-size:10px;letter-spacing:1.5px;color:#98a1ad;font-weight:700}
+.nav-label{padding:0 12px}
+.nav{width:100%;text-align:left;background:transparent;color:#687383;padding:12px;border-radius:8px;margin:3px 0;font:600 13px 'DM Sans';border:0;cursor:pointer}
+.nav:hover,.nav.active{background:#fff0e6;color:var(--orange-dark)}
+.side-note{margin:45px 8px 0;background:#fff5ed;border-radius:10px;padding:14px;font-size:12px}
+.side-note p{color:#8a7567;line-height:1.6;margin-bottom:0}
+main{max-width:1450px;width:100%;padding:28px 30px;margin:0 auto}
+.page-head{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:22px}
+.page-head h2{font:800 26px Manrope;margin:5px 0}
+.page-head p:last-child{color:var(--muted);margin:0}
+.eyebrow{margin:0}
+.panel{background:#fff;border:1px solid var(--line);border-radius:13px;padding:22px;margin-bottom:18px;box-shadow:0 2px 7px #182c4205}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:17px}
+.panel h3{font:700 16px Manrope;margin:0 0 5px}
+.panel-head p{margin:0;color:var(--muted);font-size:12px}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:18px}
+.metric{padding:18px;background:#fff;border:1px solid var(--line);border-radius:12px}
+.metric .label{color:var(--muted);font-size:12px}
+.metric .value{font:800 24px Manrope;margin:10px 0 5px;overflow-wrap:anywhere}
+.metric .sub{font-size:11px;color:#9aa3af}
+.primary,button{border:0;border-radius:8px;background:var(--orange);color:#fff;padding:10px 14px;font:700 12px 'DM Sans';cursor:pointer}
+.primary:hover,button:hover{filter:brightness(.97)}
+.outline{background:white;border:1px solid #d9dee6;color:#495566}
+.text-btn{background:transparent;color:var(--orange-dark);padding:8px}
+.quick-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.quick-actions button{display:flex;justify-content:space-between;background:#fffaf6;border:1px solid #f5d9c7;color:#71472f;text-align:left;padding:16px}
+.quick-actions span{color:var(--orange)}
+.inline-form{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0 18px}
+.inline-form input{flex:1;min-width:170px}
+.form-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-bottom:18px}
+.form-grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}.form-grid label{display:flex;flex-direction:column;gap:7px;font-size:12px;color:#566172;font-weight:600}
+.form-grid input,.form-grid select{width:100%;font-weight:400;color:var(--ink)}.form-grid .check-label{display:flex;flex-direction:row;align-items:center;align-self:end;padding:10px 0}
+.check-label input{width:auto}.form-actions{grid-column:1/-1}.hint{padding:12px 14px;background:#fff8f2;color:#8b684f;border-radius:8px;font-size:12px;line-height:1.6}
+.table-wrap{width:100%;overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:620px}
+th,td{text-align:left;border-bottom:1px solid #edf0f4;padding:13px 11px;font-size:12px;vertical-align:middle}
+th{font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:#8993a1;background:#fafbfc}
+td{color:#4a5564}.badge{display:inline-block;padding:5px 8px;border-radius:99px;font-size:10px;font-weight:700;background:#fff2df;color:#9a5b0d}
+.badge.VERIFIED,.badge.active{background:#e4f7ed;color:#197b4b}
+.badge.REJECTED,.badge.inactive{background:#ffebeb;color:#b33434}
+.row-actions{display:flex;gap:6px}
+.row-actions button{padding:7px 9px;font-size:11px}
+.row-actions .reject{background:#fceaea;color:#a92b2b}
+.empty{padding:24px;text-align:center;color:var(--muted)}
+.notice{padding:12px 15px;border-radius:9px;background:#e6f7ed;color:#176b40;margin-bottom:18px}
+.notice.error{background:#fff0ef;color:#a62c25}
+.hidden{display:none!important}footer{text-align:center;color:#9ba4af;font-size:11px;padding:20px}
+.quick-actions button{font-size:12px}@media(max-width:1000px){.shell{grid-template-columns:190px minmax(0,1fr)}
+    main{padding:22px 18px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .form-grid,.form-grid.four{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .topbar{align-items:flex-start;flex-direction:column}}
+@media(max-width:650px){.shell{display:block}
+    .sidebar{display:flex;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line);padding:8px}
+    .nav-label,.side-note{display:none}.nav{white-space:nowrap;width:auto}
+    .topbar{padding:14px}.login{width:100%}
+    .login input{flex:1;min-width:110px}
+    .page-head{align-items:flex-start;flex-direction:column}
+    .metrics{grid-template-columns:1fr 1fr}
+    .form-grid,.form-grid.four{grid-template-columns:1fr}
+    .quick-actions{grid-template-columns:1fr}
+    main{padding:18px 12px}.panel{padding:15px}}
