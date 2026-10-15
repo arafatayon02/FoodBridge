@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>FoodBridge Admin</title>
+    <link rel="stylesheet" href="/AdminStyles.css">
+</head>
+<body>
+<header class="topbar">
+    <div class="brand"><span class="logo">FB</span>
+        <div><h1>FoodBridge <span>Admin</span>
+        </h1><p>Retail Track · Platform management</p></div>
+    </div>
+    <div class="login"><input id="username" aria-label="Admin username" value="admin" placeholder="Username">
+        <input id="password" aria-label="Admin password" type="password" placeholder="Admin password">
+        <button id="connectBtn">Connect</button>
+
+        <span id="connection" class="status">Not connected</span>
+    </div>
+</header>
+<div class="shell"><aside class="sidebar"><p class="nav-label">WORKSPACE</p>
+    <button class="nav active" data-view="overview">▦ &nbsp; Overview</button>
+    <button class="nav" data-view="verification">✓ &nbsp; Supershop verification</button>
+    <button class="nav" data-view="commission">％ &nbsp; Commission settings</button>
+    <button class="nav" data-view="featured">☆ &nbsp; Featured listings</button>
+    <button class="nav" data-view="billing">▤ &nbsp; Billing statements</button>
+    <button class="nav" data-view="reports">▥ &nbsp; Platform reports</button>
+    <div class="side-note"><b>Admin workspace</b><p>Approve verified partners and manage Retail Track settings.</p></div></aside>
+    <main>
+        <div class="page-head"><div><p class="eyebrow">FOODBRIDGE / ADMIN</p><h2 id="pageTitle">Overview</h2><p id="pageSub">A clear view of your retail platform.</p></div><button class="outline" id="refreshBtn">↻ Refresh data</button></div>
+        <div id="notice" class="notice hidden" role="status"></div>
+        <section id="overview" class="view">
+            <div id="metrics" class="metrics"></div>
+            <div class="panel"><div class="panel-head"><div><h3>Quick actions</h3><p>Common admin operations</p></div></div><div class="quick-actions"><button data-go="verification">Review pending shops <span>→</span></button><button data-go="commission">Configure commission <span>→</span></button><button data-go="billing">Generate a statement <span>→</span></button></div></div>
+            <div class="panel"><div class="panel-head"><div><h3>Pending supershop approvals</h3><p>New Retail Track registrations awaiting review</p></div><button class="text-btn" data-go="verification">View queue →</button></div><div id="pendingPreview" class="table-wrap"></div></div>
+        </section>
+        <section id="verification" class="view hidden"><div class="panel"><div class="panel-head"><div><h3>Supershop verification queue</h3><p>Approval grants the Verified badge and Retail Track eligibility.</p></div><button id="loadShops" class="outline">Reload queue</button></div><form id="shopForm" class="inline-form"><input id="shopName" required placeholder="Supershop business name"><input id="shopEmail" type="email" required placeholder="Contact email"><button class="primary">Add pending shop</button></form><div id="shopsTable" class="table-wrap"></div></div></section>
+        <section id="commission" class="view hidden"><div class="panel"><div class="panel-head"><div><h3>Retail commission configuration</h3><p>Applied to new transactions and statements created after saving.</p></div></div><form id="commissionForm" class="form-grid"><label>Commission rate (%)<input id="commissionRate" type="number" min="0" max="100" step="0.01" required></label><label class="check-label"><input id="commissionActive" type="checkbox"> Commission is active</label><div class="form-actions"><button class="primary">Save commission settings</button></div></form><div class="hint">Example: a 5% rate on ৳1,000 produces ৳50 commission and ৳950 net settlement.</div></div></section>
+        <section id="featured" class="view hidden"><div class="panel"><div class="panel-head"><div><h3>Subscription plans</h3><p>Create and maintain featured placement plans.</p></div></div><form id="planForm" class="form-grid four"><label>Plan name<input id="planName" required maxlength="80" placeholder="Featured Plus"></label><label>Price (BDT)<input id="planPrice" type="number" min="0" step="0.01" required placeholder="1499"></label><label>Duration (days)<input id="planDays" type="number" min="1" max="3650" required value="30"></label><label class="check-label"><input id="planActive" type="checkbox" checked> Active plan</label><div class="form-actions"><button class="primary">Create plan</button></div></form><div id="plansTable" class="table-wrap"></div></div><div class="panel"><div class="panel-head"><div><h3>Create featured listing</h3><p>Dates are inclusive. End date cannot precede start date.</p></div></div><form id="featuredForm" class="form-grid"><label>Business name<input id="featuredBusiness" required placeholder="Green Basket Super Shop"></label><label>Listing title<input id="featuredTitle" required placeholder="Fresh grocery deals"></label><label>Subscription plan<select id="featuredPlan" required></select></label><label>Start date<input id="featuredStart" type="date" required></label><label>End date<input id="featuredEnd" type="date" required></label><div class="form-actions"><button class="primary">Create featured listing</button></div></form><div id="featuredTable" class="table-wrap"></div></div></section>
+        <section id="billing" class="view hidden"><div class="panel"><div class="panel-head"><div><h3>Generate billing statement</h3><p>Commission is calculated using the currently active rate.</p></div></div><form id="billingForm" class="form-grid"><label>Business name<input id="billBusiness" required placeholder="Business name"></label><label>Period start<input id="billStart" type="date" required></label><label>Period end<input id="billEnd" type="date" required></label><label>Gross sales (BDT)<input id="billGross" type="number" min="0" step="0.01" required></label><div class="form-actions"><button class="primary">Generate statement</button></div></form><div id="billsTable" class="table-wrap"></div></div><div class="panel"><div class="panel-head"><div><h3>Record a retail transaction</h3><p>Useful for populating report data in this standalone demo.</p></div></div><form id="transactionForm" class="inline-form"><input id="txBusiness" required placeholder="Business name"><input id="txGross" type="number" min="0" step="0.01" required placeholder="Gross amount (BDT)"><button class="primary">Record transaction</button></form></div></section>
+        <section id="reports" class="view hidden"><div class="panel"><div class="panel-head"><div><h3>Platform reporting</h3><p>Summary metrics calculated from saved records.</p></div><button class="outline" id="reportRefresh">Refresh report</button></div><div id="reportMetrics" class="metrics"></div><div class="hint">Amounts are in Bangladeshi taka (BDT). Report figures reflect records in this application's database.</div></div></section>
+        <footer>FoodBridge Admin · Local development dashboard</footer></main></div><script src="/app.js"></script>
+</body>
+</html>
