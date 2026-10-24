@@ -1,0 +1,79 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>FoodBridge Receipt</title>
+
+    <link rel="stylesheet" href="/css/app.css">
+</head>
+
+<body>
+
+<main class="wrap">
+
+    <h1>FoodBridge Payment Receipt</h1>
+
+    <p>
+        Receipt for order #
+        <strong th:text="${order.id}"></strong>
+    </p>
+
+    <p>
+        Consumer:
+        <span th:text="${order.consumerEmail}"></span>
+    </p>
+
+    <p>
+        Product:
+        <span th:text="${order.productName}"></span>
+    </p>
+
+    <p>
+        Quantity:
+        <span th:text="${order.quantity}"></span>
+    </p>
+
+    <p>
+        Total:
+        <strong th:text="${order.totalAmount}"></strong>
+    </p>
+
+    <p>
+        Order status:
+        <span th:text="${order.status}"></span>
+    </p>
+
+    <section th:if="${payment}">
+
+        <p>
+            Method/provider:
+            <span th:text="${payment.provider}"></span>
+        </p>
+
+        <p>
+            Payment status:
+            <span th:text="${payment.status}"></span>
+        </p>
+
+        <p>
+            Reference:
+            <span th:text="${payment.providerReference}"></span>
+        </p>
+
+    </section>
+
+    <p th:if="${order.pickupCode}">
+        Pickup code:
+        <strong th:text="${order.pickupCode}"></strong>
+    </p>
+
+    <button onclick="window.print()">
+        Print / Save as PDF
+    </button>
+
+</main>
+
+</body>
+</html>

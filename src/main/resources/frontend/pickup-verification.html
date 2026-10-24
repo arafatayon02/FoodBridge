@@ -1,0 +1,77 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Pickup Verification</title>
+
+    <link rel="stylesheet" href="/css/app.css">
+</head>
+
+<body>
+
+<main class="wrap">
+
+    <h1>Supershop Pickup Verification</h1>
+
+    <p>
+        Ask the consumer for the code shown on their order,
+        then verify it here.
+    </p>
+
+    <form method="post">
+
+        <input
+                type="hidden"
+                th:name="${_csrf.parameterName}"
+                th:value="${_csrf.token}">
+
+        <label>
+            Pickup code
+
+            <input
+                    name="pickupCode"
+                    required
+                    maxlength="16">
+        </label>
+
+        <button type="submit">
+            Verify pickup
+        </button>
+
+    </form>
+
+    <p
+            th:if="${message}"
+            th:text="${message}">
+    </p>
+
+    <p
+            th:if="${error}"
+            th:text="${error}">
+    </p>
+
+    <section th:if="${order}">
+
+        <p>
+            Order #
+            <span th:text="${order.id}"></span>
+        </p>
+
+        <p>
+            Consumer:
+            <span th:text="${order.consumerEmail}"></span>
+        </p>
+
+        <p>
+            Status:
+            <span th:text="${order.status}"></span>
+        </p>
+
+    </section>
+
+</main>
+
+</body>
+</html>

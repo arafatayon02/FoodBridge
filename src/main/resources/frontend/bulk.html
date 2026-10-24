@@ -1,0 +1,61 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Bulk Listing Upload</title>
+
+    <link rel="stylesheet" href="/css/app.css">
+</head>
+
+<body>
+
+<main class="wrap">
+
+    <h1>Bulk Listing &amp; Listing Duplication</h1>
+
+    <p>
+        Upload a CSV with columns:
+        name,description,originalPrice,salePrice,quantity,
+        pickupLocation,safetyCutoff.
+    </p>
+
+    <p>
+        Use ISO local date-time for cutoff, e.g.
+        2026-10-25T18:00:00.
+        Do not include commas inside fields.
+    </p>
+
+    <form method="post" enctype="multipart/form-data">
+
+        <input
+                type="hidden"
+                th:name="${_csrf.parameterName}"
+                th:value="${_csrf.token}">
+
+        <input
+                type="file"
+                name="file"
+                accept=".csv,text/csv"
+                required>
+
+        <button type="submit">
+            Import listings
+        </button>
+
+    </form>
+
+    <p
+            th:if="${error}"
+            th:text="${error}">
+    </p>
+
+    <p>
+        <a href="/products">Back to products</a>
+    </p>
+
+</main>
+
+</body>
+</html>

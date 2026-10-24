@@ -1,0 +1,3 @@
+package com.foodbridge.listing;
+import org.springframework.data.jpa.repository.*;import org.springframework.data.repository.query.Param;import jakarta.persistence.LockModeType;import java.time.LocalDateTime;import java.util.*;
+public interface RetailListingRepository extends JpaRepository<RetailListing,Long>{@Lock(LockModeType.PESSIMISTIC_WRITE) @Query("select l from RetailListing l where l.id=:id") Optional<RetailListing> findByIdForUpdate(@Param("id") Long id);@Query("select l from RetailListing l where l.active=true and l.availableQuantity>0 and l.safetyCutoff>:now order by l.safetyCutoff") List<RetailListing> findPurchasable(@Param("now") LocalDateTime now);}

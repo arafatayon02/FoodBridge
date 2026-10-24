@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Sandbox Checkout | FoodBridge</title>
+
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body>
+
+<nav>
+    <a class="brand" href="/">FoodBridge</a>
+    <a href="/consumer/orders">My orders</a>
+</nav>
+
+<main class="narrow">
+
+    <p class="eyebrow">PAYMENT STEP</p>
+
+    <h1>Secure checkout</h1>
+
+    <div class="panel">
+
+        <p class="muted">
+            DEMO SANDBOX ONLY · NO REAL MONEY WILL BE CHARGED
+        </p>
+
+        <h2 th:text="${order.productName}">
+            Product
+        </h2>
+
+        <p>
+            Order #
+            <span th:text="${order.id}"></span>
+            · Quantity
+            <span th:text="${order.quantity}"></span>
+        </p>
+
+        <div class="total">
+            <span>Total to pay</span>
+
+            <strong th:text="'৳' + ${order.totalAmount}">
+                ৳0
+            </strong>
+        </div>
+
+        <p class="muted">
+            Provider reference:
+            <span th:text="${payment.providerReference}"></span>
+        </p>
+
+        <form
+                th:action="@{'/payments/demo/' + ${order.id} + '/result'}"
+                method="post"
+                class="actions">
+
+            <button
+                    class="button"
+                    name="success"
+                    value="true">
+                Simulate successful payment
+            </button>
+
+            <button
+                    class="button danger"
+                    name="success"
+                    value="false">
+                Simulate failed payment
+            </button>
+
+        </form>
+
+    </div>
+
+    <p class="muted">
+        A real bKash, Nagad, or SSLCommerz integration requires
+        provider credentials and server-side transaction verification.
+    </p>
+
+</main>
+
+</body>
+</html>
