@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Consumer Profile | FoodBridge</title>
+
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body>
+
+<nav>
+    <a class="brand" href="/">FoodBridge</a>
+
+    <div>
+        <a href="/consumer/orders">My orders</a>
+        <a href="/">Shop</a>
+    </div>
+</nav>
+
+<main class="narrow">
+
+    <p class="eyebrow">CONSUMER ACCOUNT</p>
+
+    <h1>Your profile</h1>
+
+    <div class="panel">
+
+        <p class="muted">Signed in as</p>
+
+        <h3 th:text="${profile.email}">
+            consumer@example.com
+        </h3>
+
+        <p>
+            <strong th:text="${orderCount}">0</strong>
+            orders placed
+        </p>
+
+        <p class="muted" th:if="${param.saved}">
+            Profile saved successfully.
+        </p>
+
+        <form
+                th:action="@{/consumer/profile}"
+                th:object="${form}"
+                method="post"
+                class="profile-form">
+
+            <label>
+                Full name
+
+                <input
+                        th:field="*{fullName}"
+                        required
+                        maxlength="120">
+            </label>
+
+            <label>
+                Phone number
+
+                <input
+                        th:field="*{phone}"
+                        maxlength="30"
+                        placeholder="01XXXXXXXXX">
+            </label>
+
+            <label>
+                Preferred pickup area
+
+                <input
+                        th:field="*{preferredPickupArea}"
+                        maxlength="160"
+                        placeholder="e.g. Dhanmondi, Dhaka">
+            </label>
+
+            <button class="button" type="submit">
+                Save profile
+            </button>
+
+        </form>
+
+    </div>
+
+</main>
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Order Details | FoodBridge</title>
+
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body>
+
+<nav>
+    <a class="brand" href="/">FoodBridge</a>
+    <a href="/consumer/orders">Order history</a>
+</nav>
+
+<main class="narrow">
+
+    <p class="eyebrow">ORDER CONFIRMATION</p>
+
+    <h1>
+        Order
+        <span th:text="'#' + ${order.id}"></span>
+    </h1>
+
+    <div class="panel">
+
+        <span class="status" th:text="${order.status}"></span>
+
+        <h2 th:text="${order.productName}">
+            Product
+        </h2>
+
+        <p>
+            Quantity:
+            <span th:text="${order.quantity}"></span>
+        </p>
+
+        <div class="total">
+            <span>Total paid</span>
+
+            <strong th:text="'৳' + ${order.totalAmount}">
+                ৳0
+            </strong>
+        </div>
+
+        <div
+                th:if="${order.pickupCode != null}"
+                class="pickup">
+
+            <p class="eyebrow">
+                YOUR PICKUP CONFIRMATION CODE
+            </p>
+
+            <strong th:text="${order.pickupCode}">
+                ABCD1234
+            </strong>
+
+            <p>
+                Show this code to branch staff when collecting your order.
+            </p>
+
+        </div>
+
+        <p
+                th:if="${order.status.name() == 'PAYMENT_FAILED'}"
+                class="notice">
+
+            Payment failed. The reserved quantity has been returned
+            to available stock.
+
+        </p>
+
+    </div>
+
+    <a class="button" href="/consumer/orders">
+        Back to order history
+    </a>
+
+</main>
+
+</body>
+</html>

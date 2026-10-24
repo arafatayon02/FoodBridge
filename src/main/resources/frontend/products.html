@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>FoodBridge | Discounted Food</title>
+
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body>
+
+<nav>
+    <a class="brand" href="/">FoodBridge</a>
+
+    <div>
+        <a href="/consumer/orders">My orders</a>
+        <a href="/consumer/profile">Profile</a>
+
+        <form class="inline" th:action="@{/logout}" method="post">
+            <button class="linkbtn">Sign out</button>
+        </form>
+    </div>
+</nav>
+
+<main>
+
+    <section class="hero">
+        <p class="eyebrow">RETAIL TRACK</p>
+
+        <h1>Good food. Better prices.</h1>
+
+        <p>
+            Reserve discounted near-expiry products and collect them
+            at your selected branch.
+        </p>
+
+        <a class="button light" href="#products">
+            Explore products
+        </a>
+    </section>
+
+    <p
+            class="notice"
+            th:if="${param.error}"
+            th:text="${param.error}">
+    </p>
+
+    <section id="products">
+
+        <div class="section-head">
+            <div>
+                <p class="eyebrow">TODAY'S FINDS</p>
+                <h2>Discounted products</h2>
+            </div>
+
+            <span
+                    class="muted"
+                    th:text="${products.size()} + ' available'">
+                    Available
+                </span>
+        </div>
+
+        <div class="grid">
+
+            <article class="product" th:each="p : ${products}">
+
+                <div class="product-top">
+                    <span class="pill">Near-expiry deal</span>
+
+                    <span
+                            class="stock"
+                            th:text="${p.availableQuantity} + ' left'">
+                            Stock
+                        </span>
+                </div>
+
+                <h3 th:text="${p.name}">Product</h3>
+
+                <p th:text="${p.description}">
+                    Description
+                </p>
+
+                <p
+                        class="location"
+                        th:text="${p.pickupLocation}">
+                    Location
+                </p>
+
+                <p class="cutoff">
+                    Safety cutoff:
+                    <span
+                            th:text="${#temporals.format(p.safetyCutoff, 'dd MMM, HH:mm')}">
+                        </span>
+                </p>
+
+                <div class="price">
+                    <strong th:text="'৳' + ${p.salePrice}">
+                        ৳0
+                    </strong>
+
+                    <del th:text="'৳' + ${p.originalPrice}">
+                        ৳0
+                    </del>
+                </div>
+
+                <form
+                        th:action="@{'/products/' + ${p.id} + '/reserve'}"
+                        method="post">
+
+                    <label>
+                        Quantity
+
+                        <input
+                                name="quantity"
+                                type="number"
+                                min="1"
+                                max="20"
+                                value="1"
+                                required>
+                    </label>
+
+                    <button class="button" type="submit">
+                        Reserve &amp; Pay
+                    </button>
+
+                </form>
+
+            </article>
+
+        </div>
+    </section>
+
+    <footer>
+        FoodBridge · Reducing food waste, one good deal at a time.
+    </footer>
+
+</main>
+
+</body>
+</html>

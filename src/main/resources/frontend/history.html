@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>My Orders | FoodBridge</title>
+
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body>
+
+<nav>
+    <a class="brand" href="/">FoodBridge</a>
+
+    <div>
+        <a href="/consumer/profile">Profile</a>
+        <a href="/">Shop</a>
+    </div>
+</nav>
+
+<main>
+
+    <p class="eyebrow">YOUR FOODBRIDGE</p>
+
+    <h1>Order history</h1>
+
+    <div
+            th:if="${#lists.isEmpty(orders)}"
+            class="panel">
+
+        <p>
+            No orders yet. Your next great deal is waiting.
+        </p>
+
+        <a class="button" href="/">
+            Browse products
+        </a>
+
+    </div>
+
+    <div class="order-list">
+
+        <article
+                class="panel order"
+                th:each="o : ${orders}">
+
+            <div>
+
+                    <span
+                            class="muted"
+                            th:text="'ORDER #' + ${o.id}">
+                        Order
+                    </span>
+
+                <h3 th:text="${o.productName}">
+                    Product
+                </h3>
+
+                <p
+                        th:text="${#temporals.format(o.createdAt, 'dd MMM yyyy, HH:mm')}">
+                    Date
+                </p>
+
+            </div>
+
+            <div class="order-side">
+
+                    <span
+                            class="status"
+                            th:text="${o.status}">
+                        STATUS
+                    </span>
+
+                <strong th:text="'৳' + ${o.totalAmount}">
+                    ৳0
+                </strong>
+
+                <a th:href="@{'/orders/' + ${o.id}}">
+                    View details →
+                </a>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</main>
+
+</body>
+</html>
