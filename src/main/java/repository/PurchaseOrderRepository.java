@@ -1,0 +1,1 @@
+package com.foodbridge.orders;import org.springframework.data.jpa.repository.JpaRepository;import java.util.*;public interface PurchaseOrderRepository extends JpaRepository<PurchaseOrder,Long>{List<PurchaseOrder> findByConsumerEmailOrderByCreatedAtDesc(String email);}

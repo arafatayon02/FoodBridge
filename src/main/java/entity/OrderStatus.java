@@ -1,0 +1,1 @@
+package com.foodbridge.orders; public enum OrderStatus { PENDING_PAYMENT, PAYMENT_FAILED, CONFIRMED, READY_FOR_PICKUP, PICKED_UP, CANCELLED, EXPIRED }
