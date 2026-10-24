@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Consumer Profile | FoodBridge</title>
+
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav>
+    <a class="brand" th:href="@{/}">FoodBridge</a>
+
+    <div>
+        <a th:href="@{/consumer/orders}">My Orders</a>
+        <a th:href="@{/}">Shop</a>
+    </div>
+</nav>
+
+<main class="narrow">
+
+    <!-- Page Heading -->
+    <p class="eyebrow">CONSUMER ACCOUNT</p>
+
+    <h1>Your Profile</h1>
+
+    <div class="panel">
+
+        <!-- Account Information -->
+        <p class="muted">Signed in as</p>
+
+        <h3 th:text="${profile.email}">
+            consumer@example.com
+        </h3>
+
+        <p>
+            <strong th:text="${orderCount}">0</strong>
+            orders placed
+        </p>
+
+        <!-- Success Message -->
+        <p class="notice"
+           th:if="${param.saved != null}">
+            Profile saved successfully.
+        </p>
+
+        <!-- Profile Form -->
+        <form
+                th:action="@{/consumer/profile}"
+                th:object="${form}"
+                method="post"
+                class="profile-form">
+
+            <label for="fullName">
+                Full Name
+
+                <input
+                        type="text"
+                        id="fullName"
+                        th:field="*{fullName}"
+                        maxlength="120"
+                        autocomplete="name"
+                        required>
+            </label>
+
+            <label for="phone">
+                Phone Number
+
+                <input
+                        type="tel"
+                        id="phone"
+                        th:field="*{phone}"
+                        maxlength="30"
+                        placeholder="01XXXXXXXXX"
+                        autocomplete="tel">
+            </label>
+
+            <label for="preferredPickupArea">
+                Preferred Pickup Area
+
+                <input
+                        type="text"
+                        id="preferredPickupArea"
+                        th:field="*{preferredPickupArea}"
+                        maxlength="160"
+                        placeholder="e.g. Dhanmondi, Dhaka">
+            </label>
+
+            <button class="button" type="submit">
+                Save Profile
+            </button>
+
+        </form>
+
+    </div>
+
+</main>
+
+</body>
+</html>

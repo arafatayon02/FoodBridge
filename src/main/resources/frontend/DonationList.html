@@ -1,0 +1,170 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FoodBridge | Food Donations</title>
+
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav>
+    <a class="brand" th:href="@{/}">FoodBridge</a>
+
+    <div>
+        <a th:href="@{/products}">Retail Deals</a>
+        <a th:href="@{/donor/donations/new}">Publish Donation</a>
+        <a th:href="@{/donor/staff-accounts}">Donor Staff</a>
+        <a th:href="@{/charity/documents}">Charity Documents</a>
+    </div>
+</nav>
+
+<main>
+
+    <!-- Hero Section -->
+    <section class="hero">
+
+        <p class="eyebrow">DONATION TRACK</p>
+
+        <h1>Good Food Deserves Another Table.</h1>
+
+        <p>
+            Verified donor organizations can offer safe surplus food
+            to charities for free collection.
+        </p>
+
+        <a class="button light" th:href="@{/donor/donations/new}">
+            Publish a Donation
+        </a>
+
+    </section>
+
+    <!-- Success Message -->
+    <p class="notice"
+       th:if="${param.success != null}">
+        Donation listing published successfully.
+    </p>
+
+    <!-- Donation Listings Heading -->
+    <div class="section-head">
+
+        <div>
+            <p class="eyebrow">AVAILABLE SURPLUS</p>
+            <h2>Donation Listings</h2>
+        </div>
+
+        <span class="muted"
+              th:text="${donations != null ? donations.size() + ' available' : '0 available'}">
+                Available
+            </span>
+
+    </div>
+
+    <!-- Donation Cards -->
+    <div class="grid">
+
+        <article class="product" th:each="d : ${donations}">
+
+            <span class="pill">Free Donation</span>
+
+            <h3 th:text="${d.foodName}">
+                Food Name
+            </h3>
+
+            <p th:text="${d.description}">
+                Food description
+            </p>
+
+            <p>
+                <strong>Donor:</strong>
+                <span th:text="${d.donorOrganization}">
+                        Donor organization
+                    </span>
+            </p>
+
+            <p>
+                <strong>Quantity:</strong>
+                <span th:text="${d.quantity}">
+                        0
+                    </span>
+            </p>
+
+            <p class="location"
+               th:text="${d.pickupAddress}">
+                Pickup Address
+            </p>
+
+            <!-- Pickup and Safety Times -->
+            <p class="cutoff">
+
+                Pickup from
+
+                <span th:if="${d.pickupStart != null}"
+                      th:text="${#temporals.format(d.pickupStart, 'dd MMM, HH:mm')}">
+                    </span>
+
+                <span th:unless="${d.pickupStart != null}">
+                        Not specified
+                    </span>
+
+                <br>
+
+                Safety cutoff
+
+                <span th:if="${d.safetyCutoff != null}"
+                      th:text="${#temporals.format(d.safetyCutoff, 'dd MMM, HH:mm')}">
+                    </span>
+
+                <span th:unless="${d.safetyCutoff != null}">
+                        Not specified
+                    </span>
+
+            </p>
+
+            <!-- Dietary and Allergen Tags -->
+            <p>
+                <strong>Dietary / Allergen Tags</strong>
+            </p>
+
+            <div th:if="${d.dietaryTags != null and !d.dietaryTags.isEmpty()}">
+
+                    <span th:each="tag : ${d.dietaryTags}"
+                          class="pill"
+                          th:text="${tag}">
+                        Dietary Tag
+                    </span>
+
+            </div>
+
+            <p class="muted"
+               th:if="${d.dietaryTags == null or d.dietaryTags.isEmpty()}">
+                No dietary or allergen tags provided.
+            </p>
+
+        </article>
+
+    </div>
+
+    <!-- Empty State -->
+    <p class="muted"
+       th:if="${donations == null or #lists.isEmpty(donations)}">
+        No donations are currently available.
+        Please check again later.
+    </p>
+
+    <!-- Footer -->
+    <footer>
+        Donation bookings are free. Always verify allergen information
+        with the donor.
+    </footer>
+
+</main>
+
+</body>
+</html>

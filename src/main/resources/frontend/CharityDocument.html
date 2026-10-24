@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Charity Verification Documents | FoodBridge</title>
+
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav>
+    <a class="brand" th:href="@{/}">FoodBridge</a>
+
+    <div>
+        <a th:href="@{/donations}">Donation Listings</a>
+    </div>
+</nav>
+
+<main class="narrow">
+
+    <!-- Page Heading -->
+    <p class="eyebrow">CHARITY VERIFICATION</p>
+
+    <h1>Organization Documents</h1>
+
+    <p class="muted">
+        Upload a charity registration or verification document.
+        Files are stored outside the public static directory.
+        Downloads are restricted to the uploader or an administrator.
+    </p>
+
+    <!-- Success Message -->
+    <p class="notice"
+       th:if="${success != null}"
+       th:text="${success}">
+    </p>
+
+    <!-- Error Message -->
+    <p class="notice"
+       th:if="${error != null}"
+       th:text="${error}">
+    </p>
+
+    <!-- Upload Form -->
+    <div class="panel">
+
+        <form th:action="@{/charity/documents}"
+              method="post"
+              enctype="multipart/form-data">
+
+            <label for="file">
+                Choose PDF, JPEG, or PNG (maximum 10 MB)
+
+                <input
+                        type="file"
+                        id="file"
+                        name="file"
+                        accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                        required>
+            </label>
+
+            <button class="button" type="submit">
+                Upload for Verification
+            </button>
+
+        </form>
+
+    </div>
+
+    <!-- Uploaded Documents Table -->
+    <div class="panel table-wrap">
+
+        <h2>Uploaded Documents</h2>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Filename</th>
+                <th>Uploaded</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr th:each="d : ${documents}">
+
+                <td th:text="${d.originalFilename}">
+                    document.pdf
+                </td>
+
+                <td th:text="${d.uploadedAt != null
+                            ? #temporals.format(d.uploadedAt, 'dd MMM yyyy HH:mm')
+                            : 'N/A'}">
+                    24 Oct 2026 10:00
+                </td>
+
+                <td th:text="${d.status}">
+                    PENDING
+                </td>
+
+                <td>
+                    <a th:href="@{/charity/documents/{id}/download(id=${d.id})}">
+                        Download
+                    </a>
+                </td>
+
+            </tr>
+
+            </tbody>
+        </table>
+
+        <!-- Empty State -->
+        <p class="muted"
+           th:if="${documents == null or #lists.isEmpty(documents)}">
+            No documents uploaded yet.
+        </p>
+
+    </div>
+
+</main>
+
+</body>
+</html>

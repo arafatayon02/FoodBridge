@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donor Staff Accounts | FoodBridge</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body>
+
+<nav>
+    <a class="brand" th:href="@{/}">FoodBridge</a>
+    <div>
+        <a th:href="@{/donations}">Donations</a>
+        <a th:href="@{/donor/donations/new}">Publish Donation</a>
+    </div>
+</nav>
+
+<main>
+
+    <p class="eyebrow">DONOR MANAGEMENT</p>
+    <h1>Multiple Donor Staff Accounts</h1>
+
+    <p class="muted">
+        Manage staff records for
+        <strong th:text="${organization.name}">Donor Organization</strong>.
+        Each staff member gets an individual login. Passwords are stored
+        as BCrypt hashes. Share temporary passwords securely and change
+        them through your organization's credential process.
+    </p>
+
+    <div class="panel">
+        <h2>Add Staff Member</h2>
+
+        <form th:action="@{/donor/staff-accounts}"
+              th:object="${form}"
+              method="post"
+              class="profile-form">
+
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName"
+                   th:field="*{fullName}"
+                   maxlength="100" required>
+
+            <p class="notice"
+               th:if="${#fields.hasErrors('fullName')}"
+               th:errors="*{fullName}"></p>
+
+            <label for="email">Email</label>
+            <input type="email" id="email"
+                   th:field="*{email}" required>
+
+            <p class="notice"
+               th:if="${#fields.hasErrors('email')}"
+               th:errors="*{email}"></p>
+
+            <label for="jobTitle">Job Title</label>
+            <input type="text" id="jobTitle"
+                   th:field="*{jobTitle}"
+                   maxlength="80" required>
+
+            <p class="notice"
+               th:if="${#fields.hasErrors('jobTitle')}"
+               th:errors="*{jobTitle}"></p>
+
+            <label for="password">
+                Temporary Password (Minimum 8 Characters)
+            </label>
+            <input type="password" id="password"
+                   th:field="*{password}"
+                   minlength="8" maxlength="72"
+                   autocomplete="new-password" required>
+
+            <p class="notice"
+               th:if="${#fields.hasErrors('password')}"
+               th:errors="*{password}"></p>
+
+            <button class="button" type="submit">
+                Add Staff Member
+            </button>
+
+        </form>
+    </div>
+
+    <div class="panel table-wrap">
+        <h2>Staff Accounts</h2>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Job Title</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="s : ${staffAccounts}">
+                <td th:text="${s.fullName}">Staff Name</td>
+                <td th:text="${s.email}">staff@example.com</td>
+                <td th:text="${s.jobTitle}">Job Title</td>
+                <td th:text="${s.active ? 'Active' : 'Inactive'}">
+                    Active
+                </td>
+                <td>
+                    <form th:action="@{/donor/staff-accounts/{id}/active(id=${s.id})}"
+                          method="post">
+
+                        <input type="hidden"
+                               name="value"
+                               th:value="${!s.active}">
+
+                        <button class="button small"
+                                type="submit"
+                                th:text="${s.active ? 'Deactivate' : 'Reactivate'}">
+                            Deactivate
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p class="muted"
+           th:if="${staffAccounts == null or #lists.isEmpty(staffAccounts)}">
+            No staff members added yet.
+        </p>
+    </div>
+
+</main>
+
+</body>
+</html>
