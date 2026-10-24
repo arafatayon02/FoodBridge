@@ -1,0 +1,47 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Bulk Import Result</title>
+
+    <link rel="stylesheet" href="/css/app.css">
+</head>
+
+<body>
+
+<main class="wrap">
+
+    <h1>Bulk import result</h1>
+
+    <p>
+        Created:
+        <strong th:text="${created}"></strong>
+    </p>
+
+    <p>
+        Skipped duplicates:
+        <strong th:text="${duplicates}"></strong>
+    </p>
+
+    <p>
+        Invalid rows:
+        <strong th:text="${invalid}"></strong>
+    </p>
+
+    <ul>
+        <li
+                th:each="e : ${errors}"
+                th:text="${e}">
+        </li>
+    </ul>
+
+    <a href="/staff/listings/bulk">
+        Import another file
+    </a>
+
+</main>
+
+</body>
+</html>
