@@ -1,0 +1,6 @@
+package com.foodbridge.payment;
+import jakarta.persistence.*;import java.math.BigDecimal;import java.time.LocalDateTime;
+@Entity @Table(name="payment_transactions",uniqueConstraints=@UniqueConstraint(name="uk_payment_provider_ref",columnNames="providerReference")) public class PaymentTransaction {
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY) private Long id;@Column(nullable=false) private Long orderId;@Column(nullable=false,precision=10,scale=2) private BigDecimal amount;@Enumerated(EnumType.STRING) @Column(nullable=false) private PaymentStatus status;@Column(nullable=false) private String provider;@Column(nullable=false,unique=true) private String providerReference;@Column(nullable=false) private LocalDateTime createdAt;
+    protected PaymentTransaction(){}public PaymentTransaction(Long orderId,BigDecimal amount,String provider,String ref){this.orderId=orderId;this.amount=amount;this.provider=provider;this.providerReference=ref;this.status=PaymentStatus.INITIATED;this.createdAt=LocalDateTime.now();}public Long getId(){return id;}public Long getOrderId(){return orderId;}public BigDecimal getAmount(){return amount;}public PaymentStatus getStatus(){return status;}public String getProvider(){return provider;}public String getProviderReference(){return providerReference;}public void setStatus(PaymentStatus s){status=s;}
+}
